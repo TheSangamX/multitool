@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Premium Multi-Tool Website - QR Generator, JSON Formatter, SIP Calculator, Word Counter, PDF Converter and more">
+    <meta name="keywords" content="QR code generator, JSON formatter, SIP calculator, word counter, PDF converter, online tools">
+    <meta name="author" content="Multi-Tool Team">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourdomain.com/">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:title" content="Premium Multi-Tool Website - 5+ Essential Tools">
+    <meta property="og:description" content="QR Generator, JSON Formatter, SIP Calculator, Word Counter, PDF Converter - All in one place">
+    <meta property="og:image" content="https://yourdomain.com/assets/images/og-image.jpg">
+    <meta property="og:url" content="https://yourdomain.com/">
+    <meta property="og:type" content="website">
+    
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+    
+    <title>Premium Multi-Tool Website - QR Generator, JSON Formatter & More</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    
+    <!-- Critical CSS -->
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #f59e0b;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --background-light: #ffffff;
+            --background-dark: #0f172a;
+            --text-light: #1e293b;
+            --text-dark: #f8fafc;
+            --border-light: #e2e8f0;
+            --border-dark: #334155;
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-light);
+            background-color: var(--background-light);
+            transition: all 0.3s ease;
+        }
+        
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            padding: 1rem 0;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+        
+        .tool-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-light);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-light);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        /* Dark mode */
+        [data-theme="dark"] {
+            --background-light: var(--background-dark);
+            --text-light: var(--text-dark);
+            --border-light: var(--border-dark);
+        }
+        
+        [data-theme="dark"] .header {
+            background: rgba(15, 23, 42, 0.95);
+        }
+        
+        [data-theme="dark"] .tool-card {
+            background: #1e293b;
+            border-color: var(--border-dark);
+        }
+        
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            color: white;
+            font-weight: 500;
+            z-index: 10000;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            background: var(--success-color);
+        }
+        
+        .notification.error {
+            background: var(--error-color);
+        }
+        
+        .notification.warning {
+            background: var(--warning-color);
+        }
+    </style>
+    
+    <!-- External Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js" defer></script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main-content" class="skip-link sr-only">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="nav-container" role="navigation">
+            <a href="#" class="logo">🛠️ Multi-Tool Pro</a>
+            
+            <div class="nav-controls">
+                <button id="preferences-btn" class="nav-btn" aria-label="Open preferences" data-panel-trigger="preferences">⚙️</button>
+                <button id="history-btn" class="nav-btn" aria-label="Open history" data-panel-trigger="history">📚</button>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button>
+                <button id="install-app" class="btn-primary" style="display: none;">Install App</button>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Main content -->
+    <main id="main-content" role="main">
+        <!-- Hero section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Premium Multi-Tool Suite</h1>
+                <p>5 Essential Tools for Productivity & Development</p>
+                <div class="hero-stats">
+                    <span>🚀 Fast</span>
+                    <span>🔒 Secure</span>
+                    <span>📱 Mobile-Ready</span>
+                    <span>⚡ Offline-Capable</span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Tools Grid -->
+        <section class="tools-grid">
+            <!-- QR Code Generator -->
+            <div class="tool-card" id="qr-generator">
+                <h2>🔗 QR Code Generator</h2>
+                <p>Generate customizable QR codes with colors and download options</p>
+                
+                <div class="tool-content">
+                    <div class="input-group">
+                        <label for="qr-text">Text or URL:</label>
+                        <textarea id="qr-text" placeholder="Enter text or URL to generate QR code" rows="3">hi</textarea>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="qr-size">Size:</label>
+                            <select id="qr-size">
+                                <option value="200">200x200</option>
+                                <option value="300" selected>300x300</option>
+                                <option value="400">400x400</option>
+                                <option value="500">500x500</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="qr-color">Color:</label>
+                            <input type="color" id="qr-color" value="#000000">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="qr-bg-color">Background:</label>
+                            <input type="color" id="qr-bg-color" value="#ffffff">
+                        </div>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="generate-qr" class="btn-primary">Generate QR Code</button>
+                        <button id="download-qr" class="btn-secondary" disabled>Download PNG</button>
+                    </div>
+                    
+                    <div id="qr-result" class="result-area"></div>
+                </div>
+            </div>
+            
+            <!-- JSON Formatter -->
+            <div class="tool-card" id="json-formatter">
+                <h2>📋 JSON Formatter & Validator</h2>
+                <p>Format, validate, and minify JSON with syntax highlighting</p>
+                
+                <div class="tool-content">
+                    <div class="input-group">
+                        <label for="json-input">JSON Input:</label>
+                        <textarea id="json-input" placeholder='{"name": "example", "value": 123}' rows="8">{"name": "example", "value": 123}</textarea>
+                    </div>
+                    
+                    <div class="button-group">
+                        <button id="format-json" class="btn-primary">Format JSON</button>
+                        <button id="minify-json" class="btn-secondary">Minify</button>
+                        <button id="validate-json" class="btn-secondary">Validate</button>
+                        <button id="copy-json" class="btn-secondary">Copy Result</button>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label for="json-output">Formatted Output:</label>
+                        <textarea id="json-output" readonly rows="8"></textarea>
+                    </div>
+                    
+                    <div id="json-status" class="status-area"></div>
+                </div>
+            </div>
+            
+            <!-- SIP Calculator -->
+            <div class="tool-card" id="sip-calculator">
+                <h2>💰 SIP Calculator</h2>
+                <p>Calculate SIP returns with compound interest and goal planning</p>
+                
+                <div class="tool-content">
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="sip-amount">Monthly Investment (₹):</label>
+                            <input type="number" id="sip-amount" value="5000" min="100">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="sip-rate">Expected Return (% p.a.):</label>
+                            <input type="number" id="sip-rate" value="12" min="1" max="30" step="0.1">
+                        </div>
+                    </div>
+                    
+                    <div class="input-row">
+                        <div class="input-group">
+                            <label for="sip-years">Investment Period (Years):</label>
+                            <input type="number" id="sip-years" value="10" min="1" max="50">
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="sip-goal">Target Amount (₹):</label>
+                            <input type="number" id="sip-goal" placeholder="Optional target">
+                        </div>
+                    </div>
+                    
+                    <button id="calculate-sip" class="btn-primary">Calculate Returns</button>
+                    
+                    <div id="sip-results" class="results-area">
+                        <div class="result-cards">
+                            <div class="result-card">
+                                <h4>Total Investment</h4>
+                                <span id="invested-amount">₹0</span>
+                            </div>
+                            <div class="result-card">
+                                <h4>Total Returns</h4>
+                                <span id="total-returns">₹0</span>
+                            </div>
+                            <div class="result-card">
+                                <h4>Maturity Amount</h4>
+                                <span id="maturity-amount">₹0</span>
+                            </div>
+                        </div>
+                        
+                        <canvas id="sip-chart" width="400" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Word Counter Pro -->
+            <div class="tool-card" id="word-counter">
+                <h2>📝 Word Counter Pro</h2>
+                <p>Real-time word count, readability score, and SEO analysis</p>
+                
+                <div class="tool-content">
+                    <div class="input-group">
+                        <label for="text-input">Enter your text:</label>
+                        <textarea id="text-input" placeholder="Start typing to see real-time analysis..." rows="10"></textarea>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h4>Words</h4>
+                            <span id="word-count">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Characters</h4>
+                            <span id="char-count">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Characters (no spaces)</h4>
+                            <span id="char-no-space">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Paragraphs</h4>
+                            <span id="paragraph-count">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Sentences</h4>
+                            <span id="sentence-count">0</span>
+                        </div>
+                        <div class="stat-card">
+                            <h4>Reading Time</h4>
+                            <span id="reading-time">0 min</span>
+                        </div>
+                    </div>
+                    
+                    <div class="analysis-section">
+                        <h4>Readability Analysis</h4>
+                        <div id="readability-score" class="score-display">
+                            <span class="score">0</span>
+                            <span class="grade">Grade: N/A</span>
+                        </div>
+                        
+                        <h4>Top Keywords</h4>
+                        <div id="keyword-density" class="keyword-list"></div>
+                        
+                        <h4>Social Media Optimization</h4>
+                        <div class="social-limits">
+                            <div class="limit-item">
+                                <span>Twitter: </span>
+                                <span id="twitter-limit" class="limit-status">0/280</span>
+                            </div>
+                            <div class="limit-item">
+                                <span>Facebook: </span>
+                                <span id="facebook-limit" class="limit-status">0/63206</span>
+                            </div>
+                            <div class="limit-item">
+                                <span>LinkedIn: </span>
+                                <span id="linkedin-limit" class="limit-status">0/3000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PDF to Word Converter -->
+            <div class="tool-card" id="pdf-converter">
+                <h2>📄 PDF to Word Converter</h2>
+                <p>Convert PDF files to Word documents with drag-and-drop</p>
+                
+                <div class="tool-content">
+                    <div class="upload-area" id="pdf-upload-area">
+                        <div class="upload-content">
+                            <div class="upload-icon">📁</div>
+                            <h3>Drag & Drop PDF File</h3>
+                            <p>or click to browse</p>
+                            <input type="file" id="pdf-file-input" accept=".pdf" hidden>
+                        </div>
+                    </div>
+                    
+                    <div id="conversion-progress" class="progress-area" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <div class="progress-text" id="progress-text">Processing...</div>
+                    </div>
+                    
+                    <div id="conversion-result" class="result-area" style="display: none;">
+                        <div class="file-info">
+                            <h4>Conversion Complete!</h4>
+                            <p id="file-details"></p>
+                        </div>
+                        <button id="download-word" class="btn-primary">Download Word Document</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- User Preferences Panel -->
+        <div id="preferences-panel" class="preferences-panel">
+            <h3>⚙️ Preferences</h3>
+            <div class="preference-group">
+                <label>
+                    <input type="checkbox" id="save-history"> Save tool history
+                </label>
+                <label>
+                    <input type="checkbox" id="auto-save"> Auto-save inputs
+                </label>
+                <label>
+                    <input type="checkbox" id="show-shortcuts"> Show keyboard shortcuts
+                </label>
+            </div>
+        </div>
+        
+        <!-- Tool History Panel -->
+        <div id="history-panel" class="history-panel">
+            <h3>📚 Recent History</h3>
+            <div id="history-list" class="history-list"></div>
+            <button id="clear-history" class="btn-secondary">Clear All History</button>
+        </div>
+    </main>
+    
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+    
+    <!-- Keyboard Shortcuts Help -->
+    <div id="shortcuts-modal" class="modal">
+        <div class="modal-content">
+            <h3>⌨️ Keyboard Shortcuts</h3>
+            <div class="shortcuts-list">
+                <div class="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>1-5</kbd> - Switch between tools
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>Enter</kbd> - Execute current tool
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>S</kbd> - Save/Download result
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>H</kbd> - Toggle history
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl</kbd> + <kbd>,</kbd> - Open preferences
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Esc</kbd> - Close modals
+                </div>
+            </div>
+            <button class="btn-primary" onclick="closeShortcutsModal()">Close</button>
+        </div>
+    </div>
+    
+    <!-- Schema.org structured data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Premium Multi-Tool Website",
+        "description": "QR Code Generator, JSON Formatter, SIP Calculator, Word Counter, and PDF Converter tools",
+        "url": "https://yourdomain.com",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "Any",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "QR Code Generator with customization",
+            "JSON Formatter and Validator",
+            "SIP Calculator with charts",
+            "Word Counter with readability analysis",
+            "PDF to Word Converter"
+        ]
+    }
+    </script>
+    
+    <!-- JavaScript Files -->
+    <script src="js/utils.js" defer></script>
+    <script src="js/theme.js" defer></script>
+    <script src="js/navigation.js" defer></script>
+    <script src="js/smooth-scroll.js" defer></script>
+    <script src="assets/js/analytics.min.js" defer></script>
+    <script src="assets/js/app.js" defer></script>
+</body>
+</html>
